@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: 4ndr0666
-# ===================== // TWIN_SCORE.SH //
-## Description: 📈 TWIN FEEDBACK LOGGER + LEARNING PATCH v0.4
+# ===================== // EXO_SCORE.SH //
+## Description: 📈 EXO FEEDBACK LOGGER + LEARNING PATCH v0.4
 # ------------------------
 
 # PYTHON PORT: ___________________________________________________________________________
@@ -9,17 +9,17 @@
 # from pathlib import Path
 # from datetime import datetime
 #
-# twin_dir = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "twin"
-# log_file = twin_dir / "feedback.csv"
+# exo_dir = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "twin"
+# log_file = exo_dir / "feedback.csv"
 # log_file.parent.mkdir(parents=True, exist_ok=True)
 # timestamp = datetime.now().isoformat()
 # query = sys.argv[1] if len(sys.argv) > 1 else "[undefined]"
 
 ### 🔹 Bash Globals
 
-TWIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/twin"
-mkdir -p "$TWIN_DIR"
-LOG_FILE="$TWIN_DIR/feedback.csv"
+EXO_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/exo"
+mkdir -p "$EXO_DIR"
+LOG_FILE="$EXO_DIR/feedback.csv"
 touch "$LOG_FILE"
 QUERY="$1"
 TIMESTAMP="$(date +%F_%T)"
@@ -43,7 +43,7 @@ fi
 ### 🔹 Remap Suggestion and Deduplication
 
     if [[ -n "$new_cmd" ]]; then
-        MAP_FILE="$TWIN_DIR/feature-map.txt"
+        MAP_FILE="$EXO_DIR/feature-map.txt"
         ENTRY="$QUERY | $new_cmd"
 
         ### prevent dupes
@@ -52,7 +52,7 @@ fi
             echo "✅ Updated mapping saved to feature-map.txt"
             echo "$TIMESTAMP,[learned],$ENTRY" >> "$LOG_FILE"
         else
-            echo "⚠️ Mapping already exists. No changes made." 
+            echo "⚠️ Mapping already exists. No changes made."
         fi
     else
         echo "⚠️ No command entered. Mapping unchanged."

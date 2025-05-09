@@ -8,19 +8,19 @@ set -euo pipefail
     # import os, sys
     # from pathlib import Path
     #
-    # twin_dir = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "twin"
-    # map_file = twin_dir / "feature-map.txt"
-    # twin_dir.mkdir(parents=True, exist_ok=True)
+    # exo_dir = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "twin"
+    # map_file = exo_dir / "feature-map.txt"
+    # exo_dir.mkdir(parents=True, exist_ok=True)
     #
     # query = " ".join(sys.argv[1:]).strip()
     # if not query:
     #     print("⚠️ Empty or invalid input. Logging...")
-    #     # call twin_score.py here
+    #     # call exo_score.py here
     # ----------------------------------------------------------------------------
 
 ## Globals
 
-TWIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/twin"
+TWIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/exocortex"
 MAP_FILE="$TWIN_DIR/feature-map.txt"
 mkdir -p "$TWIN_DIR"
 
@@ -47,7 +47,7 @@ validate_input() {
     local input="$1"
     if [[ -z "$input" || "${input// /}" = "" ]]; then
         echo "⚠️ Empty or invalid input. Routing to feedback loop..."
-        "$(rootpath)/twin_score.sh" "[undefined]"
+        "$(rootpath)/exo_score.sh" "[undefined]"
         exit 0
     fi
 }
@@ -60,7 +60,7 @@ fuzzy_match() {
         cut -d'|' -f1 "$MAP_FILE" | fzf --prompt="Twin command: "
     else
         echo "❌ fzf not installed. Routing to feedback loop..."
-        "$(rootpath)/twin_score.sh" "$QUERY"
+        "$(rootpath)/exo_score.sh" "$QUERY"
         exit 0
     fi
 }
@@ -71,7 +71,7 @@ sanitize_command() {
     local candidate="$1"
     if echo "$candidate" | grep -qE 'rm\s+-rf|:?\(\)\s*\{'; then
         echo "⚠️ Suspicious command detected. Logging attempt..."
-        "$(rootpath)/twin_score.sh" "$QUERY"
+        "$(rootpath)/exo_score.sh" "$QUERY"
         exit 0
     fi
 }
@@ -100,7 +100,7 @@ execute_match() {
     sanitize_command "$match"
     echo "🎯 Found match: $match"
     eval "${match#*|}"
-    "$(rootpath)/twin_score.sh" "$QUERY"
+    "$(rootpath)/exo_score.sh" "$QUERY"
 }
 
 ## PYTHON PORT___________________________________________________
@@ -119,9 +119,9 @@ execute_match() {
     #                 break
     # if match:
     #     os.system(match.split('|', 1)[1].strip())
-    #     call twin_score.py
+    #     call exo_score.py
     # else:
-    #     call twin_score.py(query)
+    #     call exo_score.py(query)
     # ___________________________________________________________________________________
 
 ## Main Entry Point
@@ -134,7 +134,7 @@ if [[ -z "$match" ]]; then
     match=$(grep -i -m 1 "^$QUERY[[:space:]]*|" "$MAP_FILE" || true)
     [[ -z "$match" ]] && {
         echo "❌ Nothing selected. Logging..."
-        "$(rootpath)/twin_score.sh" "$QUERY"
+        "$(rootpath)/exo_score.sh" "$QUERY"
         exit 0
     }
 fi

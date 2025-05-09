@@ -45,11 +45,11 @@
 
 ## Globals
 
-TWIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/twin"
-MAP_FILE="$TWIN_DIR/feature-map.txt"
-LOG_FILE="$TWIN_DIR/feedback.csv"
+EXO_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/exocortex"
+MAP_FILE="$EXO_DIR/feature-map.txt"
+LOG_FILE="$EXO_DIR/feedback.csv"
 
-mkdir -p "$TWIN_DIR"
+mkdir -p "$EXO_DIR"
 touch "$LOG_FILE" "$MAP_FILE"
 
 ## Query and Timestamp

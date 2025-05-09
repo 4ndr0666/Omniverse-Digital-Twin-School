@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # Author: 4ndr0666
-# =================== // TWIN_UI.SH //
+# =================== // EXO_UI.SH //
 ## Description: 🧭 Interactive selector using whiptail
 # ----------------------------
 
 ## PYTHON PORT ___________________________________________________________
 # from pathlib import Path
 # from prompt_toolkit.shortcuts import radiolist_dialog
-# map_file = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "twin" / "feature-map.txt"
+# map_file = Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "exocortex" / "feature-map.txt"
 # options = [(line.split('|')[0].strip(), line.strip()) for line in map_file.open()]
 # result = radiolist_dialog(
-#     title="TWIN COMMAND SELECTOR",
+#     title="EXOCORTEX COMMAND SELECTOR",
 #     text="Choose a task for your digital twin:",
 #     values=options
 # ).run()
 # if result:
-#     subprocess.run(["twin.sh", result])
+#     subprocess.run(["exocortex", result])
 # ________________________________________________________________________
 
 ## 🔹 Path Resolution
@@ -36,7 +36,7 @@ rootpath() {
 
 ## 🔹 Feature Map and Menu Construction
 
-MAP="${XDG_DATA_HOME:-$HOME/.local/share}/twin/feature-map.txt"
+MAP="${XDG_DATA_HOME:-$HOME/.local/share}/exocortex/feature-map.txt"
 OPTIONS=()
 
 ### PYTHON PORT___________________________________
@@ -53,19 +53,19 @@ done < "$MAP"
 ### PYTHON PORT__________________________________
     # from prompt_toolkit.shortcuts import radiolist_dialog
     # result = radiolist_dialog(
-    #     title="TWIN COMMAND SELECTOR",
+    #     title="EXOCORTEX COMMAND SELECTOR",
     #     text="Choose a task for your digital twin:",
     #     values=options
     # ).run()
     # --------------------------------
 
-CHOICE=$(whiptail --title "TWIN COMMAND SELECTOR" \
-                  --menu "Choose a task for your digital twin:" 20 78 10 \
+CHOICE=$(whiptail --title "EXOCORTEX COMMAND SELECTOR" \
+                  --menu "Choose a task for your digital cortex:" 20 78 10 \
                   "${OPTIONS[@]}" \
                   3>&1 1>&2 2>&3)
 
 if [[ -n "$CHOICE" ]]; then
-    "$(rootpath)/twin.sh" "$CHOICE"
+    "$(rootpath)/exocortex" "$CHOICE"
 else
     echo "⚠️ No selection made."
 fi

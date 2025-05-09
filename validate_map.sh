@@ -28,7 +28,7 @@
 
 ## Globals
 
-MAP_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/twin/feature-map.txt"
+MAP_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/exocortex/feature-map.txt"
 [[ ! -f "$MAP_FILE" ]] && { echo "❌ Map file not found: $MAP_FILE"; exit 1; }
 
 echo "🔍 Validating: $MAP_FILE"
